@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Plata: gastos, ingresos, cuotas, metas y un simulador de inversión. Cargá tus gastos hablando.">
+<meta name="description" content="Platita: gastos, ingresos, cuotas, metas y un simulador de inversión. Cargá tus gastos hablando.">
 <meta name="theme-color" content="#16739F">
-<title>Plata</title>
+<title>Platita</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316739F'/%3E%3Cpath d='M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -141,7 +141,7 @@ nav.nav button[aria-current="page"]{color:var(--accent);background:var(--surface
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand">Plata</div>
+    <div class="brand">Platita</div>
     <div class="top-right">
       <span class="sync" id="sync" role="status"></span>
       <button class="btn sec small" data-act="view" data-v="ajustes">Ajustes</button>
@@ -296,7 +296,7 @@ function saveFile(name,data,type){
   var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
   setTimeout(function(){URL.revokeObjectURL(u)},4000);
 }
-function backup(){saveFile('plata-copia-'+TODAY+'.json',JSON.stringify({v:1,cfg:S.cfg,months:S.months}),'application/json');toast('Copia descargada')}
+function backup(){saveFile('platita-copia-'+TODAY+'.json',JSON.stringify({v:1,cfg:S.cfg,months:S.months}),'application/json');toast('Copia descargada')}
 function importBackup(inp){
   var f=inp.files&&inp.files[0];if(!f) return;
   var r=new FileReader();
@@ -305,14 +305,14 @@ function importBackup(inp){
       var d=JSON.parse(r.result);
       if(!d||!d.cfg||typeof d.months!=='object') throw 0;
       S.cfg=normCfg(d.cfg);S.months=d.months;S.demo=false;persist();render();toast('Copia restaurada');
-    }catch(e){toast('Ese archivo no es una copia de Plata',false,6000)}
+    }catch(e){toast('Ese archivo no es una copia de Platita',false,6000)}
   };
   r.readAsText(f);inp.value='';
 }
 function backupUi(){
   return '<p class="note">Los datos viven en este dispositivo. Si borrás los datos del navegador se pierden, así que descargá una copia de vez en cuando. También sirve para pasar tus datos a otro dispositivo.</p>'+
     '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sec" data-act="backup">Descargar copia</button><label class="btn sec" style="cursor:pointer">Restaurar copia<input id="imp" type="file" accept="application/json,.json" hidden></label></div>'+
-    '<p class="note">Dictado por voz: lo hace el navegador. En Chrome el audio se procesa en servidores de Google. Plata no guarda el audio, solo el movimiento que interpreta.</p>';
+    '<p class="note">Dictado por voz: lo hace el navegador. En Chrome el audio se procesa en servidores de Google. Platita no guarda el audio, solo el movimiento que interpreta.</p>';
 }
 
 /* ---------- cálculos ---------- */
@@ -598,7 +598,7 @@ function exportCsv(){
     rows.push([t.d,t.type==='in'?'Ingreso':'Gasto',t.cat,t.note||'',t.pay||'',t.cur,String(t.amt).replace('.',','),String(Math.round(ars(t.amt,t.cur))).replace('.',',')]);
   });
   var csv='﻿'+rows.map(function(r){return r.map(csvCell).join(';')}).join('\r\n');
-  saveFile('plata-'+S.ym+'.csv',csv,'text/csv;charset=utf-8');toast('Archivo descargado');
+  saveFile('platita-'+S.ym+'.csv',csv,'text/csv;charset=utf-8');toast('Archivo descargado');
 }
 function wipe(){
   var done=function(){
